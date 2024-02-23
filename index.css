@@ -1,0 +1,24 @@
+html, body {
+    margin: 0;
+    padding: 0;
+
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    color: #333;
+}
+
+.header {
+    padding: 20px;
+    margin: 0;
+
+    background-color: #f4f4f4;
+    text-align: center;
+}
+
+.list {
+    padding: 20px;
+    margin: 20px;
+
+    font-size: 1.4em;
+}

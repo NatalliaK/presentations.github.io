@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+        <link rel="stylesheet" href="/dist/reveal.css">
+        <link rel="stylesheet" href="plugin/highlight/monokai.css">
+        <link rel="stylesheet" href="/dist/theme/black.css">
+    </head>
+    <body>
+        <div class="reveal">
+            <div class="slides">
+                <section>
+                    <h1>THIS</h1>
+                </section>
+                <section>
+                    <section>
+                        <p>When do we need THIS?</p>
+                    </section>
+                    <section>
+
+<pre>
+    <code data-trim data-noescape data-line-numbers="1-6|4|8">
+        const user = {
+            name: 'Teddy',
+            sayGreeting: function() {
+                console.log(`Hello ${user.name}!`);
+            }
+        };
+
+        user.sayGreeting(); // 'Hello Teddy!'
+    </code>
+</pre>
+
+                    </section>
+                    <section>
+                        <p>Problem:</p>
+                        <p class="fragment fade-in">
+                            <small>If we overwrite or delete the user object, admin remains,
+                                <br />
+                            but its <em>sayGreeting</em> method references <strong>user.name</strong>, which no longer exists
+                        </small>
+                        </p>
+<pre class="fragment fade-in">
+    <code data-trim  data-noescape data-line-numbers="4|8|9|11-12|14|16|18">
+        const user = {
+            name: 'Teddy',
+            sayGreeting: function() {
+                console.log(`Hello ${user.name}!`);
+            }
+        };
+
+        const admin = user;
+        user = null;
+
+        // value of admin = {name: 'Teddy', sayGreeting: [Function: sayGreeting]}
+        // value of user = null
+
+        admin.sayGreeting();
+
+        //result: "TypeError: Cannot read property 'name' of null"
+
+        //because admin.sayGreeting() -> try to find the variable `user` and get its property `name`
+    </code>
+</pre>
+                    </section>
+                    <section>
+                        <p>How to fix it?</p>
+                        <p class="fragment fade-in">Use THIS</p>
+<pre class="fragment fade-in">
+    <code data-trim  data-noescape data-line-numbers="4|10|11|13-14|16|18|19">
+        const user = {
+            name: 'Teddy',
+            sayGreeting: function() {
+            console.log(`Hello ${this.name}!`);
+
+            // "this" = this object
+            }
+        };
+
+        const admin = user;
+        user = null;
+
+        // value of admin = {name: 'Teddy', sayGreeting: [Function: sayGreeting]}
+        // value of user = null
+
+        admin.sayGreeting();
+
+        // 'Hello Teddy!'
+        //because admin.sayGreeting() -> try to find property `name` into the this object (the object `admin`)
+    </code>
+</pre>
+                    </section>
+                </section>
+                <section>
+                    <section>
+                        <p>What is THIS?</p>
+                    </section>
+                    <section>
+                        <p><strong>THIS</strong> is the context of the function call</p>
+                        <p class="fragment fade-in">
+                            <strong>this</strong> is determined at the moment the function is called and depends on how the function has been called
+                        </p>
+                    </section>
+                </section>
+                <section>
+                    <p>Methods of invoking a function that affect its <strong>THIS</strong></p>
+                </section>
+                <section>
+                    <section>
+                        <p>1. Common function call <br />
+                            <small>(function expression, function declaration)</small>
+                        </p>
+<pre>
+    <code data-trim  data-noescape>
+        function sayHello() {
+            console.log(this);
+
+            // "this" = global object
+            // for browsers, it's the window object
+        }
+
+        sayHello();
+    </code>
+</pre>
+                    </section>
+                    <section>
+                        <p>2. Invoking a function as a method</p>
+<pre>
+    <code data-trim  data-noescape>
+        const user = {
+            name: 'Teddy',
+            sayGreeting: function() {
+                console.log(this);
+
+                // "this" = this object
+            }
+        };
+
+        user.sayGreeting();
+    </code>
+</pre>
+                    </section>
+                    <section>
+                        <p>3. Constructor invocation <br />
+                            <small>(invoking a function with new)</small>
+                        </p>
+<pre>
+    <code data-trim  data-noescape>
+        function User(name) {
+            this.name = name;
+            console.log(this);
+
+            // "this" = new object
+            // the object that is created by the constructor
+        }
+
+        const teddy = new User('Teddy');
+    </code>
+</pre>
+                    </section>
+                    <section>
+                        <p>4. Invoking an arrow function</p>
+<pre>
+    <code data-trim  data-noescape>
+         const user = {
+            name: 'Teddy',
+            sayGreeting: () => {
+                console.log(this);
+
+                // "this" = global object
+                // arrow function does not have its own "this"
+                // it uses the "this" from the outer scope
+            }
+        };
+
+        user.sayHello();
+    </code>
+</pre>
+                    </section>
+                    <section>
+                        <p>5. Invoking a function with call, apply, or bind</p>
+<pre>
+    <code data-trim  data-noescape>
+        function sayHello() {
+            console.log(this);
+        }
+        sayHello.call({name: 'Teddy'});
+
+        // "this" = {name: 'Teddy'}
+        // we can invoke a global function with a specific context using call, apply, bind
+    </code>
+</pre>
+
+<pre class="fragment fade-in">
+    <code data-trim  data-noescape>
+        function sayHello() {
+            console.log(this);
+        }
+        sayHello.apply({name: 'Teddy'});
+    </code>
+</pre>
+
+<pre class="fragment fade-in">
+    <code data-trim  data-noescape>
+        function sayHello() {
+            console.log(this);
+        }
+
+        const sayHelloTeddy = sayHello.bind({name: 'Teddy'});
+        sayHelloTeddy();
+    </code>
+</pre>
+                    </section>
+                    <section>
+                        <p>Calling anonymous functions</p>
+<pre>
+    <code data-trim data-noescape>
+        [1, 2].forEach(function(element) {
+            console.log(this);
+        });
+    </code>
+</pre>
+                    </section>
+                </section>
+                <section>
+                    <section>
+                        <p>How to find out with what context a function was called?</p>
+                    </section>
+                    <section>
+                        <p>You need to look at the value before the dot</p>
+<pre>
+    <code data-trim  data-noescape  data-line-numbers="7">
+        const user = {
+            name: 'Teddy',
+            sayGreeting: function() {
+                console.log(this);
+            }
+        };
+        user.sayGreeting();
+    </code>
+</pre>
+                    </section>
+                </section>
+                <section>
+                    <section>
+                        <p>Problem:</p>
+                        <p class="fragment fade-in">Context can be lost</p>
+                    </section>
+                    <section>
+                        <p>Reason:</p>
+                        <p class="fragment fade-in">
+                            <small>
+                                <strong>Any action with a function as an object method, except for the direct call of that method,
+                            leads to the loss of context.
+                                </strong>
+                            </small>
+                        </p>
+                        <p class="fragment fade-in">
+                            <small>Under the hood in JavaScript, we deal with a very weak binding of context,
+                            which is lost with any other action besides calling the function as a method.
+                            </small>
+                        </p>
+                    </section>
+                    <section>
+                        <p>Examples:</p>
+                        <pre>
+                            <code data-trim  data-noescape data-line-numbers="8|9">
+                                const user = {
+                                    name: 'Teddy',
+                                    sayGreeting: function() {
+                                        console.log(`Hello ${this.name}!`);
+                                    }
+                                };
+
+                                const sayHello = user.sayGreeting;
+                                sayHello(); // Hello undefined
+                            </code>
+                        </pre>
+                        <pre class="fragment fade-in">
+                            <code data-trim  data-noescape data-line-numbers="8">
+                                const user = {
+                                    name: 'Teddy',
+                                    sayGreeting: function() {
+                                        console.log(`Hello ${this.name}!`);
+                                    }
+                                };
+
+                                setTimeout(user.sayGreeting); // Hello undefined
+                            </code>
+                        </pre>
+                    </section>
+                    <section>
+                        <p>Solution:</p>
+                        <p class="fragment fade-in">context should to be bound</p>
+                    </section>
+                </section>
+                <section>
+                    <p>How to bind context?</p>
+                    <p class="fragment fade-in">Use <strong>bind, call, apply</strong></p>
+                </section>
+                <section>
+                    <section>
+                        <p>What is the difference between <br />
+                            <strong>call, apply</strong> and <strong>bind</strong>?
+                        </p>
+                    </section>
+                    <section>
+                        <p><strong>call</strong> and <strong>apply</strong> are used to invoke a function immediately</p>
+                        <p><strong>bind</strong>, when called, returns a new function that can be called later</p>
+                    </section>
+                    <section>
+<pre>
+    <code data-trim  data-noescape>
+        function sayHello(greeting) {
+            console.log(`${greeting} ${this.name}!`);
+        }
+        sayHello.call({name: 'Teddy'}, 'Hello');
+    </code>
+</pre>
+
+<pre class="fragment fade-in">
+    <code data-trim  data-noescape>
+        function sayHello(greeting) {
+            console.log(`${greeting} ${this.name}!`);
+        }
+        sayHello.apply({name: 'Teddy'}, ['Hello']);
+    </code>
+</pre>
+
+<pre class="fragment fade-in">
+    <code data-trim  data-noescape>
+        function sayHello(greeting) {
+            console.log(`${greeting} ${this.name}!`);
+        }
+
+        const sayHelloTeddy = sayHello.bind({name: 'Teddy'}, 'Hello');
+        sayHelloTeddy();
+    </code>
+</pre>
+                    </section>
+                </section>
+            </div>
+        </div>
+        <script src="dist/reveal.js"></script>
+        <script src="plugin/highlight/highlight.js"></script>
+        <script>
+            Reveal.initialize({
+              slideNumber: true,
+              hash: true,
+              touch: true,
+              controls: true,
+              progress: true,
+              history: true,
+              width: 800,
+              plugins: [ RevealHighlight]
+            });
+        </script>
+    </body>
+</html>
