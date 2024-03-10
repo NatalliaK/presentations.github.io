@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Git and Github</title>
+    <link rel="stylesheet" href="../reveal.css">
+    <link rel="stylesheet" href="../plugin/highlight/monokai.css">
+    <link rel="stylesheet" href="../theme/black.css">
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+            <section>
+                <h2>Git <br />and<br />GitHub</h2>
+            </section>
+            <section>
+                <h3>
+                    <small>What are</small> <br />
+                    version control systems, <br />
+                    Git, <br />
+                    <small>and </small><br />
+                    GitHub<br />
+                    <small>used for?</small>
+                </h3>
+            </section>
+            <section>
+                <img src="../images/developers.webp" alt="developers" width="500px"/>
+                <p><small>Since the time when more than one developer started working on a single project, there has been a constant search for the best approaches and solutions aimed at preserving their own changes and timely updating the project's code</small></p>
+            </section>
+            <section>
+                <section>
+                    <h3>What methods existed for multiple developers to work on a single project?</h3>
+                </section>
+                <section>
+                    <h4>1. Copy Paste</h4>
+                    <small>The oldest method of sharing project code</small>
+                    <img src="../images/copypaste.webp" alt="copy paste" width="500px" />
+                </section>
+                <section>
+                    <h4>2. Local Version Control System</h4>
+                    <small>The simplest database that stores records of all changes to files. It is a local system and is not intended for internet use and open access.</small>
+                    <img src="../images/local.webp" alt="local control system" width="500px" />
+                </section>
+                <section>
+                    <h4>3. Centralized Version Control System (SVC, SVN)</h4>
+                    <small>There is a single version of the project stored on a remote server. If the internet connection is lost, developers cannot work on the project. If something happens to the server, all progress will be lost.</small>
+                    <img src="../images/centralized.jpg" alt="centralized control system" width="400px" />
+                </section>
+                <section>
+                    <h4>4. Distributed Version Control System (Git, Mercurial)</h4>
+                    <small>The project version is stored in a remote repository.</small>
+                    <small>The same complete version of the project is stored locally on each developer's computer.</small>
+                    <small>This allows working on different tasks independently of the internet connection. If something happens to the server, copies of the project will remain on the developers' computers, and no changes will be lost.</small>
+                    <img src="../images/How+to+use+github.webp" alt="distributed control system" width="350px" />
+                </section>
+            </section>
+            <section>
+                <h4>What the difference between git and GitHub</h4>
+                <p>
+                    <small>Git is a version control system that lets you manage and keep track of your source code history.<br />
+                        GitHub is a cloud-based platform built around the Git tool. It allows developers to store and manage their code, as well as track and control changes to their code.
+                    </small>
+                </p>
+                <img src="../images/gitAndGithub.png" alt="git and github" width="500px" />
+            </section>
+            <section>
+                <h4>What is Git?</h4>
+                <p>
+                    <small>Git is a free and open source distributed version control system, that tracks the changes you make in your files,
+                        so you have a record of what has been done, and you can revert to specific versions should you ever need to. <br />
+                        Git also makes collaboration easier, allowing changes by multiple people to all be merged into one source.
+                    </small>
+                </p>
+            </section>
+            <section>
+                <h4>Types of repositories</h4>
+                <p>
+                    <small>1. Repositories to which you have the permission to make changes (for example your own repositories)</small>
+                    <small>2. Repositories to which you don't have the permission to make changes</small>
+                </p>
+            </section>
+            <section>
+                <section>
+                    <h4>How to create your own new repository</h4>
+                </section>
+                <section  data-trim>
+                    <small>1. Create a new repository</small> <br />
+                    <img src="../images/createRepository.png" alt="create new repository" width="300px" /><br />
+                    <img src="../images/createNewProject.png" alt="create new project" width="300px" />
+
+                </section>
+                <section  data-trim>
+                    <small data-trim>2. Clone the remote repository to your local machine</small>
+                    <img src="../images/github_new_repo.png" alt="clone repository" width="750px" />
+                </section>
+                <section  data-trim>
+                    <small data-trim>3. Create a new file</small><br />
+                    <small class="fragment fade-in">For example, text.txt</small><br />
+                    <small class="fragment fade-in">Add some changes on it</small>
+                </section>
+                <section  data-trim>
+                    <small data-trim>4. Add the file to the repository</small>
+                    <pre>
+                        <code  data-trim  data-noescape>
+                            git add 'name_of_file'
+                        </code>
+                    </pre>
+                </section>
+                <section  data-trim>
+                    <small data-trim>5. Commit the changes</small>
+                    <pre>
+                        <code  data-trim  data-noescape>
+                            git commit -m 'message'
+                        </code>
+                    </pre>
+                </section>
+                <section  data-trim>
+                    <small data-trim>6. Push the changes to the repository</small>
+                    <pre>
+                        <code  data-trim  data-noescape>
+                            git push -u origin main
+                        </code>
+                    </pre>
+                </section>
+            </section>
+            <section>
+                <section>
+                    <h4>How we can work with our own repository</h4>
+                </section>
+                <section>
+                    <small>1. using just only main branch (if you work on your project on your own)</small>
+                    <small>2. using different branches</small>
+                    <img src="../images/branches.png" alt="branches" width="500px" />
+                </section>
+                <section>
+                    <small>1. Create a new branch</small>
+                    <pre>
+                        <code  data-trim  data-noescape>
+                            git checkout -b 'name_of_branch'
+                        </code>
+                    </pre>
+                    <small class="fragment fade-in">2. Add some changes to your file and add changes to the git</small><br />
+                    <pre class="fragment fade-in">
+                        <code  data-trim  data-noescape>
+                            git add 'name_of_file'
+                        </code>
+                    </pre>
+                    <small class="fragment fade-in">3. Commit the changes</small> <br />
+                    <pre class="fragment fade-in">
+                        <code  data-trim  data-noescape>
+                            git commit -m 'message'
+                        </code>
+                    </pre>
+                </section>
+                <section>
+                    <small>4. Push the changes to the remote branch to your repository</small>
+                    <pre class="fragment fade-in">
+                        <code  data-trim  data-noescape>
+                            git push origin 'name_of_branch'
+                        </code>
+                    </pre>
+                    <small  class="fragment fade-in">
+                        <small>5. Create a pull request</small><br />
+                        <img src="../images/pullRequest.png" alt="pull request" width="400px" />
+                        <img src="../images/pullRequest2.png" alt="pull request" width="400px" />
+                    </small>
+                </section>
+                <section>
+                    <small>6. Merge the changes to the main branch</small><br />
+                    <img src="../images/pullRequest3.png" alt="pull request" width="400px" />
+                </section>
+                <section>
+                    <small>7. checkout your LOCAL branch to the main and update it from remote repository</small>
+                    <pre>
+                        <code  data-trim  data-noescape>
+                            git pull
+                        </code>
+                    </pre>
+                </section>
+                <section>
+                    <small>8. Repeat all cycle starting from point 1.</small>
+                </section>
+            </section>
+            <section>
+                <section>
+                    <small>How we can work with other repositories (we don't have permissions to work with them directly)</small><br />
+                    <small class="fragment fade-in">We can use FORK</small><br/>
+                    <img class="fragment fade-in" src="../images/fork.png" alt="fork" width="500px" />
+                </section>
+                <section>
+                    <small>
+                        1. Fork the repository<br />
+                        <img src="../images/createFork.png" alt="fork" width="500px" />
+                    </small>
+                </section>
+                <section>
+                    <small>
+                        2. Clone the remote repository to your local machine
+                    </small>
+                    <small class="fragment fade-in">
+                        3. Create a new branch<br />
+                    </small>
+                    <small class="fragment fade-in">
+                        4. Add some changes to your file and add changes to the git<br />
+                    </small>
+                    <small class="fragment fade-in">
+                        5. Commit the changes<br />
+                    </small>
+                    <small class="fragment fade-in">
+                        6. Push the changes to the remote branch to your repository<br />
+                    </small>
+                    <small class="fragment fade-in">
+                        7. Create a pull request<br />
+                    </small>
+                    <small class="fragment fade-in">
+                        8. Wait until the owner of the upstream repository apply your changes<br />
+                    </small>
+                    <small class="fragment fade-in">
+                        9. Remember, that you need to update your local and your remote repository after changes in the upstream repository<br />
+                    </small>
+                </section>
+            </section>
+            <section>
+                <small>Useful commands</small><br />
+                <img src="../images/usefulCommand.png" alt="commands" width="700px" />
+            </section>
+            <section>
+                <small>Useful video links</small><br />
+                <small>1. <a href="https://swcarpentry.github.io/git-novice/#creating-a-github-account">Version Control with Git</a></small><br />
+                <small>2. <a href="https://www.w3schools.com/git/default.asp?remote=github">Git Tutorial</a></small><br />
+                <small>3. <a href="https://learngitbranching.js.org/">Learn Git Branching</a></small><br />
+                <small>4. <a href="https://www.youtube.com/watch?v=RGOj5yH7evk">Git and GitHub for Beginners</a></small><br />
+                <small>5. <a href="https://www.youtube.com/watch?v=CvUiKWv2-C0">Git for Absolute Beginners</a></small><br />
+                <small>6. <a href="https://www.youtube.com/watch?v=8JJ101D3knE">Git Tutorial for Beginners</a></small><br />
+            </section>
+        </div>
+    </div>
+    <script src="../reveal.js"></script>
+    <script src="../plugin/highlight/highlight.js"></script>
+    <script>
+        Reveal.initialize({
+            slideNumber: true,
+            hash: true,
+            touch: true,
+            controls: true,
+            progress: true,
+            history: true,
+            width: 700,
+            plugins: [ RevealHighlight]
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DOM and JS</title>
+    <link rel="stylesheet" href="../reveal.css">
+    <link rel="stylesheet" href="../plugin/highlight/monokai.css">
+    <link rel="stylesheet" href="../theme/black.css">
+</head>
+<body>
+<div class="reveal">
+    <div class="slides">
+        <section>
+            <p>DOM, BOM <br />
+                <small>and</small><br />
+                js</p>
+            <img src="../images/DomBom.png" alt="DOM BOM JS" width="400px" />
+        </section>
+        <section>
+            <h4>DOM</h4>
+            <small>Document Object Model</small><br />
+            <small>It is a programming interface for HTML and XML documents.</small><br />
+            <small>It represents the page so that programs can change the document structure, style, and content.</small><br />
+            <img src="../images/DomBom.png" alt="DOM BOM JS" width="400px" />
+        </section>
+        <section>
+            <h4>BOM</h4>
+            <small>The Browser Object Model (BOM) represents additional objects provided by the browser (host environment) for working with everything except the document.</small><br />
+            <img src="../images/DomBom.png" alt="DOM BOM JS" width="400px" />
+        </section>
+        <section>
+            <small>The DOM represents HTML as a tree structure of tags.</small><br />
+            <small>There are 12 node types. In practice we usually work with 4 of them:</small><br />
+            <small>1. document – the "entry point" into DOM.</small>
+            <small>2. element nodes – HTML-tags, the tree building blocks.</small>
+            <small>3. text nodes – contain text.</small>
+            <small>4. comments – sometimes we can put information there, it won’t be shown, but JS can read it from the DOM.</small>
+            <img src="../images/nodes.png" alt="DOM BOM JS" width="500px" />
+        </section>
+        <section>
+            <h4>Search elements what close to each other</h4>
+            <small>DOM starts with the document object. That’s the main “entry point” to DOM. From it we can access any node.</small><br />
+            <small>Here’s a picture of links that allow for travel between DOM nodes</small><br />
+            <img src="../images/dom_tree.png" alt="DOM BOM JS" width="500px" />
+        </section>
+        <section>
+            <h4>Search for an arbitrary element</h4>
+            <small>1. document.getElementById(id) – searches for an element by id.</small>
+            <small>2. document.querySelector(css) – returns the first element for the given CSS selector.</small>
+            <small>3. document.querySelectorAll(css) – returns all elements for the given CSS selector.</small>
+            <small>4. document.getElementsByName - search element by name</small>
+            <small>5. document.getElementsByTagName(name) – searches for elements by tag name.</small>
+            <small>6. document.getElementsByClassName(name) – searches for elements by class, returns a collection of elements.</small>
+            <img src="../images/search_dom_elems.png" alt="search dom-elements" width="600px" />
+        </section>
+        <section>
+            <h4>Methods:</h4>
+            <small>matches - to check if elem matches the given CSS selector. It returns true or false.</small>
+            <pre>
+                <code data-trim  data-noescape>
+                    if (elem.matches('a[href$="zip"]')) {
+                        console.log("Hello!");
+                    }
+                </code>
+            </pre>
+            <small class="fragment fade-in">closest - to find the nearest ancestor that matches the given selector. It looks up the DOM tree.</small>
+            <pre class="fragment fade-in">
+                <code data-trim  data-noescape>
+                    let elem = document.querySelector('#elem');
+
+                    let parent = elem.closest('.pane');
+                    parent.style.background = 'red';
+                </code>
+            </pre>
+            <small class="fragment fade-in">contains - returns true if elemB is inside elemA (a descendant of elemA) or when elemA==elemB.</small>
+            <pre class="fragment fade-in">
+                <code data-trim  data-noescape>
+                    let elem = document.querySelector('#parent');
+
+                    console.log(elem.contains(document.querySelector('#child')));
+                </code>
+            </pre>
+        </section>
+        <section>
+            <small>The "nodeType" property</small>
+            <small>The nodeType property provides one more, “old-fashioned” way to get the “type” of a DOM node.</small>
+            <small>elem.nodeType == 1 for element nodes</small><br />
+            <small>elem.nodeType == 3 for text nodes</small><br />
+            <small>elem.nodeType == 9 for the document object</small><br />
+        </section>
+        <section>
+            <small>The "tagName" property</small>
+            <small>The tagName property exists only for Element nodes.</small>
+            <small>For element nodes, the tagName property returns the tag name in uppercase.</small>
+        </section>
+        <section>
+            <small>The "innerHTML" property</small>
+            <small>The innerHTML property allows to get the HTML inside the element as a string.</small>
+            <small>We can also modify it. So it’s one of the most powerful ways to change the page.</small>
+<pre>
+<code>
+    chatDiv.innerHTML += "<p>Hello <bold>world!</bold></p>";
+</code>
+</pre>
+        </section>
+        <section>
+            <small>The "outerHTML" property</small>
+            <small>The outerHTML property contains the full HTML of the element.</small>
+            <small>It’s like innerHTML, but for the element itself.</small>
+            <pre>
+<code>
+<div>Hello, world!</div>
+
+<script>
+  let div = document.querySelector('div');
+
+  // replace div.outerHTML with <p>...</p>
+  // div.outerHTML = '<p>A new element</p>'; // (*)
+
+  // Wow! 'div' is still the same!
+  console.log(div.outerHTML); // <div>Hello, world!</div> (**)
+</script>
+</code>
+            </pre>
+        </section>
+        <section>
+            <small>textContent: pure text</small>
+            <small>The textContent property allows to get the text inside an element (and all its descendants).</small>
+            <pre>
+<code>
+    <div id="news">
+  <h1>Headline!</h1>
+  <p>Martians attack people!</p>
+</div>
+
+<script>
+  // Headline! Martians attack people!
+  console.log(news.textContent);
+</script>
+</code>
+            </pre>
+
+        </section>
+        <section>
+            <p>Attributes and Properties</p>
+            <small>Attributes – is what’s written in HTML (key and value)</small><br />
+            <small>Properties – is what’s in DOM objects (name of the attribute with boolean value)</small>
+        </section>
+        <section>
+            <p>Standard properties:</p>
+            <small>1. The hidden property allows to hide elements.</small>
+            <small>2. checked - (for 'input type="checkbox"')</small>
+        </section>
+        <section>
+            <p>Standard attributes:</p>
+            <small>1. value – the value for input, select and textarea (HTMLInputElement, HTMLSelectElement…).</small><br />
+            <small>2. href – the “href” for 'a href="..."' (HTMLAnchorElement).</small><br />
+            <small>3. id – the “id” for any element (HTMLElement).</small><br />
+        </section>
+        <section>
+            <p>Attributes</p>
+            <small>Attributes are the values that contain additional information about the element.</small>
+            <small>For instance, the id attribute may contain a unique identifier for the element, and the href attribute – a URL.</small>
+        </section>
+        <section>
+            <p>Methods of attributes:</p>
+            <small>1. elem.hasAttribute(name) – checks for existence.</small>
+            <small>2. elem.getAttribute(name) – gets the value.</small>
+            <small>3. elem.setAttribute(name, value) – sets the value.</small>
+            <small>4. elem.removeAttribute(name) – removes the attribute.</small>
+            <pre>
+<code>
+<div something="non-standard">
+  <script>
+    console.log(div.getAttribute('something')); // non-standard
+  </script>
+</div>
+</code>
+            </pre>
+        </section>
+        <section>
+            <p>HTML attributes have the following features:</p>
+
+            <small>1. Their name is case-insensitive (id is same as ID).</small>
+            <small>2. Their values are always strings.</small>
+        </section>
+        <section>
+            <p>
+                Non-standard attributes
+            </p>
+            <small>HTML5 allows to store custom data directly inside HTML elements.</small>
+
+            <pre>
+<code>
+    <div data-about="Elephants"></div>
+<script>
+  console.log(document.querySelector('div').dataset.about); // Elephants
+</script>
+</code>
+            </pre>
+        </section>
+        <section>
+            <p>Alternatives fo innerHTML</p>
+            <small>1. document.createElement('div')</small>
+            <small>2. document.createTextNode('hello')</small>
+        </section>
+        <section>
+            <p>Inserting elements</p>
+            <small>1. node.append(...nodes or strings) – append nodes or strings at the end of node</small>
+            <small>2. node.prepend(...nodes or strings) – insert nodes or strings at the beginning of node</small>
+            <small>3. node.before(...nodes or strings) –- insert nodes or strings before node</small>
+            <small>4. node.after(...nodes or strings) –- insert nodes or strings after node</small>
+            <small>5. node.replaceWith(...nodes or strings) –- replaces node with the given nodes or strings</small>
+            <small>6. elem.insertAdjacentHTML(where, html)</small>
+            <small>7. documentFragment</small>
+        </section>
+        <section>
+            <p>insertAdjacentHTML/Text/Element</p>
+            <small>1. "beforebegin" – insert html before elem</small>
+            <small>2. "afterbegin" – insert html at the beginning of elem</small>
+            <small>3. "beforeend" – insert html at the end of elem</small>
+            <small>4. "afterend" – insert html after elem</small>
+            <pre>
+<code>
+<div id="div"></div>
+<script>
+  // div.insertAdjacentHTML('beforebegin', '<p>Hello</p>');
+  // div.insertAdjacentHTML('afterend', '<p>Bye</p>');
+</script>
+</code>
+            </pre>
+        </section>
+        <section>
+            <p>what about “document.write”?</p>
+            <small>document.write(str) writes str into the document at the place where it’s called.</small><br />
+            <small> The method comes from times when there was no DOM, no standards…</small><br />
+            <small>The call to document.write only works while the page is loading.</small><br />
+            <small>If we call it afterwards, the existing document content is erased.</small>
+        </section>
+        <section>
+            <h4>Browser Events</h4>
+            <small>1. Mouse events (click, mouseover/ mouseout, mousemove, mousedown/mouseup)</small><br />
+            <small>2. Keyboard events (keydown, keyup)</small><br />
+            <small>2. Form element events (submit, focus, change)</small><br />
+            <small>3. Document events (DOMContentLoaded, load, unload)</small><br />
+            <small>4. CSS events (transitionend, animationend)</small><br />
+        </section>
+        <section>
+            <p>How we can add event handlers:</p>
+            <small>1. HTML attribute: onclick="..."</small><br />
+            <small>2. DOM property: elem.onclick = function</small><br />
+            <small>3. Using addEventListener</small><br />
+        </section>
+        <section>
+            <p>addEventListener</p>
+            <small>1. elem.addEventListener(event, handler[, phase])</small><br />
+            <small>2. elem.removeEventListener(event, handler[, phase])</small><br />
+            <small>3. event – the event name, e.g. "click".</small><br />
+            <small>4. handler – the function to run when the event occurs.</small><br />
+            <small>5. phase – optional, the phase where to handle the event, it can be "capture" or "bubble".</small><br />
+        </section>
+        <section>
+            <p>3 phases of event:</p>
+            <small>1. Capturing phase – the event goes down to the element.</small><br />
+            <small>2. Target phase – the event reached the target element.</small><br />
+            <small>3. Bubbling phase – the event bubbles up from the element.</small><br />
+            <img src="../images/event_phases.png" alt="event phases" width="500px" />
+        </section>
+        <section>
+            <p>Each handler can access event object properties:</p>
+            <small>1. event.type – the event type, e.g. "click".</small><br />
+            <small>2. event.currentTarget (=this in addEventListener's handler) – the current element, the one that has the current handler on it.</small><br />
+            <small>3. event.clientX/event.clientY – the coordinates of the mouse pointer in page coordinates.</small><br />
+            <small>4. event.target – the “target” element that initiated the event, the innermost element that the event occurred on.</small><br />
+            <small>5. event.preventDefault() – prevents the default action of the event.</small><br />
+            <small>6. event.stopPropagation() – stops the event from bubbling.</small><br />
+            <small>7. event.stopImmediatePropagation()</small>
+            <small>8. event.eventPhase – the current phase (capturing=1, target=2, bubbling=3).</small>
+        </section>
+        <section>
+            <p>Event delegation</p>
+            <small>Event delegation is a technique of handling events at a higher level in the DOM than the element on which the event originated.</small><br />
+            <small>It allows to add a single event listener to the parent element, that will fire for all children matching a selector.</small><br />
+        </section>
+        <section>
+            <p>Browser default actions</p>
+            <small>1. A click on a link – follows the URL in the href attribute.</small><br />
+            <small>2. A click on a form submit button – submits the form.</small><br />
+            <small>3. Pressing a mouse button over a text and moving it – selects the text.</small><br />
+        </section>
+        <section>
+            <p>Preventing browser actions</p>
+            <small>1. event.preventDefault() – the standard method to cancel the event.</small><br />
+            <small>2. return false – a more ancient method to cancel the event.</small><br />
+        </section>
+
+    </div>
+</div>
+
+<script src="../reveal.js"></script>
+<script src="../plugin/highlight/highlight.js"></script>
+<script>
+    Reveal.initialize({
+        slideNumber: true,
+        hash: true,
+        touch: true,
+        controls: true,
+        progress: true,
+        history: true,
+        width: 700,
+        plugins: [ RevealHighlight]
+    });
+</script>
+</body>
+</html>
